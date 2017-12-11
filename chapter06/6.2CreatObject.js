@@ -68,4 +68,45 @@ var person2=new Person();
 person2.sayName;
 console.log(person1.sayName==person2.sayName);
 //1.理解原型函数
+alert(Person.prototype.isPrototypeOf(person1));//都有指向Person.prototye的指针
+alert(Perosn.prototype.isPrototypeOf(person2));
+//ES5新方法，Object.getPrototypeOf()
+console.log(Object.getPrototypeOf(person1)==Person.prototype);
+console.log(Object.getPrototypeOf(person1).name);
+//示例中创建constructor属性，该属性会屏蔽原型中的那个属性
+function Person(){
 
+}
+Person.prototype.name="Nicholas";
+Person.prototype.age=29;
+Person.prototype.job="Software Engineer";
+Person.prototype.sayName=function(){
+    console.log(this.name);
+};
+var person1=new Person();
+var person2=new Person();
+person1.name="Grey";
+console.log(person1.name);
+console.log(person2.name);
+//delete操纵符可以完全删除实例属性，重新访问原型中属性
+delete person.name;
+console.log(person1.name);
+//2.原型与in操作符：单独使用和for-in循环中使用
+function hasPrototypeProperty(object,name){
+    return !object.hasPrototypeProperty(name)&&(name in object);
+}
+//3.更简单的原型语法：用一个包含所有属性和方法的对象字面量来重写整个原型对象
+function Person(){
+
+}
+Perosn.prototype={
+    name:"Nicholas",
+    age:29,
+    job:"Software Engineer",
+    sayName:function(){
+        console.log(this.name);
+    }
+};
+//4.原型的动态性
+//5.原生对象的原型
+//6.原型对象的问题
