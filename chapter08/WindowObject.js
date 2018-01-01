@@ -33,8 +33,8 @@ var newValue=window.oldValue;
         <frame src="yetanotherframe.htm" name="rightFrame">//第三个框架集
         </frameset>
         </frameset>
-</html>
-*/
+*/</html>
+
 //8.1.3窗口位置
 //跨浏览器取得窗口左边和上边的位置
 var leftPos=(typeof window.screenLeft=="number")?
@@ -63,3 +63,56 @@ if(typeof pageWidth !="number"){
         pageHeigth=document.body.clientHeight;
     }
 }
+//调整浏览器窗口大小
+//调整到100*100
+window.resizeTo(100,100);
+//调整到200*150
+window.resizeBy(100,50);
+//调整到300*300
+window.resizeTo(300,300);
+//8.1.5导航和打开窗口
+//等同于<a href="http://www.wrox.com" target="topFrame"></a>
+window.open("http://www.wrox.com/","topFrame");
+//1.弹出窗口
+window.open("http://www.wrox.com/","wroxWindow",
+"height=400,width=400,top=10,left=10,resizable=yes");
+//通过window.open()控制新窗口
+var wroxWin=window.open("http://www.worx.com/","wroxWindow",
+"height=400,width=400,top=10,left=10,resizable=yes");
+//调整大小
+wroxWin.resizeTo(500,500);
+//移动位置
+wroxWin.moveTo(100,100);
+//调用close()关闭新打开的窗口
+wroxWin.close();
+//调用top.close()关闭自己
+wroxWin.close();
+console.log(wroxWin.closed);
+//window对象有一个opener属性
+var wroxWin=window.open("http://www.worx.com/","wroxWindow",
+"height=400,width=400,top=10,left=10,resizable=yes");
+console.log(wroxWin.opener==window);
+//手动实现跟踪弹出窗口
+var wroxWin=window.open("http://www.worx.com/","wroxWindow",
+"height=400,width=400,top=10,left=10,resizable=yes");
+window.opener=null;
+//2.安全限制
+//3.弹出窗口屏蔽程序
+var wroxWin=window.opener("http://www.wrox.com","_blank");
+if(wroxWin==null){
+    console.log("The popup was blocked!");
+}
+//将对window.open()的调用封装在一个try-catch中
+var blocked=false;
+try{
+    var wroxWin=window.opener("http://www.wrox.com","_blank");
+if(wroxWin==null){
+    blocked=true;
+}
+}catch(ex){
+    blocked=true;
+}
+if(blocked){
+    console.log("The popup was blocked!");
+}
+//8.1.6间歇调用和超时调用
