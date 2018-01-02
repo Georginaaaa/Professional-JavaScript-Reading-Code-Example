@@ -33,13 +33,14 @@ var newValue=window.oldValue;
         <frame src="yetanotherframe.htm" name="rightFrame">//第三个框架集
         </frameset>
         </frameset>
-*/</html>
+</html>
+*/
 
 //8.1.3窗口位置
 //跨浏览器取得窗口左边和上边的位置
 var leftPos=(typeof window.screenLeft=="number")?
 window.screenLeft:window.screenX;
-var leftPos=(typtof window.screenTop=="number")?
+var leftPos=(typeof window.screenTop=="number")?
 window.screenTop:window.screenY;
 //将窗口精确地移动到一个新位置
 //将窗口移动到屏幕左上角
@@ -116,3 +117,68 @@ if(blocked){
     console.log("The popup was blocked!");
 }
 //8.1.6间歇调用和超时调用
+//不建议传递字符串！
+setTimeout("console.log('Hello world!')",1000);
+//推荐的调用方式
+setTimeout(function(){
+    console.log("Hello world!");
+},1000
+);
+//设置超时调用
+var timeoutId=setTimeout(function(){
+    console.log("Hello world!");
+},1000);
+//注意：把它取消
+clearTimeout(timeoutId);
+
+//不建议传递字符串
+setInterval("console.log('Hello world')",1000);
+//推荐调用方式
+setInterval(function(){
+    console.log("Hello world!");
+},1000);
+//间歇调用会一直调用到页面卸载
+var num=0;
+var max=10;
+var intervalId=null;
+function incrementNumber(){
+    num++;
+    //如果执行次数达到了max设定的值，则取消后续尚未执行的调用
+    if(num==max){
+        clearInterval(intervalId);
+        console.log("Done");
+    }
+}
+intervalId=setInterval(incrementNumber,500);
+//超时调用实现
+var num=0;
+var max=10;
+function incrementNumber(){
+    num++;
+    //如果执行次数未达到max设定的值，则设置另一次超时调用
+    if(num<max){
+        setTimeout(incrementNumber,500);
+    }else{
+        alert("Done");
+    }
+}
+setTimeout(incrementNumber,500);
+//8.1.7系统对话框
+confirm("Are you sure?")
+
+if(confirm("Are you sure?")){
+    alert("I'm so glad you're sure!");
+}else{
+    alert("I'm sorry to hear you're not sure.");
+}
+
+prompt("what is your name?","Georgina")
+
+var result=prompt("what is your name?","");
+if(result !==null){
+    alert("welcome,"+result);
+}
+//显示“打印”对话框
+window.print();
+//显示“查找”对话框
+window.find();
