@@ -2,9 +2,9 @@
 //8.1.1全局作用域
 var age=29;
 function sayAge(){
-    console.log(this.age);
+    alert(this.age);
 }
-console.log(window.age);
+alert(window.age);
 sayAge();
 window.sayAge();
 //全局对象(this)不能通过delete操作符删除，但是直接在window对象上的定义的属性可以
@@ -72,6 +72,29 @@ window.resizeBy(100,50);
 //调整到300*300
 window.resizeTo(300,300);
 //8.1.5导航和打开窗口
+window.innerHeight
+647
+window.location
+Location {replace: ƒ, assign: ƒ, href: "http://weixin.sogou.com/weixin?query=%E9%9D%99%E6%…sst0=1514380548824&page=2&ie=utf8&w=01019900&dr=1", ancestorOrigins: DOMStringList, origin: "http://weixin.sogou.com", …}ancestorOrigins: DOMStringList {length: 0}assign: ƒ ()hash: ""host: "weixin.sogou.com"hostname: "weixin.sogou.com"href: "http://weixin.sogou.com/weixin?query=%E9%9D%99%E6%80%81%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F&_sug_type_=&sut=17971&lkt=1%2C1514380548705%2C1514380548705&s_from=input&_sug_=n&type=2&sst0=1514380548824&page=2&ie=utf8&w=01019900&dr=1"origin: "http://weixin.sogou.com"pathname: "/weixin"port: ""protocol: "http:"reload: ƒ reload()replace: ƒ ()search: "?query=%E9%9D%99%E6%80%81%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F&_sug_type_=&sut=17971&lkt=1%2C1514380548705%2C1514380548705&s_from=input&_sug_=n&type=2&sst0=1514380548824&page=2&ie=utf8&w=01019900&dr=1"toString: ƒ toString()valueOf: ƒ valueOf()Symbol(Symbol.toPrimitive): undefined__proto__: Location
+window.menubar
+BarProp {visible: true}visible: true__proto__: BarProp
+window.resizable
+undefined
+window.scrollbars
+BarProp {visible: true}
+window.status
+""
+window.toolbar
+BarProp {visible: true}
+window.top
+Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, frames: Window, …}
+window.width
+undefined
+window.outerWidth
+1366
+window.screenLeft
+0
+
 //等同于<a href="http://www.wrox.com" target="topFrame"></a>
 window.open("http://www.wrox.com/","topFrame");
 //1.弹出窗口
