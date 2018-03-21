@@ -47,7 +47,8 @@
     .text{
         display: inline-block;
     }
-    /* 子框设置display: inline-block,父框设置text-align:center
+    /* inline-block+text-align 
+    子框设置display: inline-block,父框设置text-align:center
     优点：兼容性好，甚至可以兼容ie6、ie7
     缺点：text里的文字也会水平居中，可以在.text添加text-align：left；还原 */
     .text2{
@@ -55,7 +56,8 @@
         display: table;
         margin:0 auto;
     }
-    /* 将子框设置为块级表格来显示，对子框设置display：table，再设置margin：0 auto
+    /* table+margin 
+    将子框设置为块级表格来显示，对子框设置display：table，再设置margin：0 auto
     优点：只设置了text2，ie8以上都支持
     缺点：不支持ie6、ie7，将div换成table */
     .box3{
@@ -67,7 +69,8 @@
         left: 50%;
         transform: translateX(-50%);
     }
-    /* 对父框设置position: relative，对子框设置position:absolute,left:50%,transform:translateX(-50%)
+    /* absolute+transform 
+    对父框设置position: relative，对子框设置position:absolute,left:50%,transform:translateX(-50%)
     优点：居中元素不会对其他的产生影响
     缺点：transform属于CSS3内容，兼容性存在一定问题，高版本浏览器需要添加一些前缀 */
     .box4{
@@ -77,7 +80,8 @@
         color: #965429;
         margin:0 auto;
     }
-    /* 将子框转换为flex item，再将子框设置居中
+    /* flex+margin 
+    将子框转换为flex item，再将子框设置居中
     先将父框设置为display:flex,再设置子框margin：0 auto
     缺点：低版本浏览器（ie6\ie7\ie8）不支持 */
     .box5{
@@ -87,12 +91,56 @@
     .text5{
         color: #965429;
     }
-    /* 将父框设置为display:flex,在设置justify-content:center
+    /* flex+justify-content 
+    将父框设置为display:flex,在设置justify-content:center
     优点：设置box5即可
     缺点：低版本浏览器(ie6\ie7\ie8)不支持 */
 
     /* 垂直居中 */
-    
+    .box6{
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .text6{
+        color: #965429;
+    }
+    /* table-cell+vertical-align 
+    将父框转化为一个表格单元格显示，设置内容垂直居中
+    优点：兼容性好，ie8以上支持 */
+    .box7{
+        position: relative;
+        color: #965429;
+    }
+    .text7{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    /* absolute+transform 
+    和水平居中的absolute+transform一样 */
+    .box8{
+        color: #965429;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .text8{
+        display: inline-block;
+    }
+    /* inline-block+text-align+table-cell+vertical-align 
+    优点：兼容性较好 */
+    .box9{
+        color: #965429;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .text9{
+        color: #965429;
+    }
+    /* flex+justify-content+align-items 
+    优点：只设置了box9
+    缺点：兼容性存在一定问题 */
     </style>
 </head>
 <body>
@@ -151,36 +199,96 @@
         <br>
         <br>
         <br>
-        <div class="box4">
+    <div class="box4">
         <div class="text4">
-                <p>昆仑文化与不死观念，是在月神宗教中发展的。
-                    <br> 研究古代宗教，可以明白古代文化；
-                    <br> 研究古代文化，也往往可以归纳到宗教上，昆仑文化是一好例。
-                    <br> 昆仑文化中含有仙意，不死的观念也离不开昆仑文化；
-                    <br> 即便是实际昆仑和许多其他山丘，也都因文化发展染上了仙意。
-                    <br> 山和仙两种意义实在不易分开。
-                    <br> 昆仑是山，仙道文化也离不开山，
-                    <br> 所以，如果说我们谈的是山的文化也无不可，
-                    <br> 当然以神话的山为基础。 本书资料充满了仙山意境。
-                    <br> ————《昆仑文化与不死观念》
-                </p>
-            </div>
-            </div>
-            <div class="box5">
-            <div class="text5">
-                    <p>昆仑文化与不死观念，是在月神宗教中发展的。
-                        <br> 研究古代宗教，可以明白古代文化；
-                        <br> 研究古代文化，也往往可以归纳到宗教上，昆仑文化是一好例。
-                        <br> 昆仑文化中含有仙意，不死的观念也离不开昆仑文化；
-                        <br> 即便是实际昆仑和许多其他山丘，也都因文化发展染上了仙意。
-                        <br> 山和仙两种意义实在不易分开。
-                        <br> 昆仑是山，仙道文化也离不开山，
-                        <br> 所以，如果说我们谈的是山的文化也无不可，
-                        <br> 当然以神话的山为基础。 本书资料充满了仙山意境。
-                        <br> ————《昆仑文化与不死观念》
-                    </p>
-                </div>
-                </div>
+            <p>昆仑文化与不死观念，是在月神宗教中发展的。
+                <br> 研究古代宗教，可以明白古代文化；
+                <br> 研究古代文化，也往往可以归纳到宗教上，昆仑文化是一好例。
+                <br> 昆仑文化中含有仙意，不死的观念也离不开昆仑文化；
+                <br> 即便是实际昆仑和许多其他山丘，也都因文化发展染上了仙意。
+                <br> 山和仙两种意义实在不易分开。
+                <br> 昆仑是山，仙道文化也离不开山，
+                <br> 所以，如果说我们谈的是山的文化也无不可，
+                <br> 当然以神话的山为基础。 本书资料充满了仙山意境。
+                <br> ————《昆仑文化与不死观念》
+            </p>
+        </div>
+    </div>
+    <div class="box5">
+        <div class="text5">
+            <p>昆仑文化与不死观念，是在月神宗教中发展的。
+                <br> 研究古代宗教，可以明白古代文化；
+                <br> 研究古代文化，也往往可以归纳到宗教上，昆仑文化是一好例。
+                <br> 昆仑文化中含有仙意，不死的观念也离不开昆仑文化；
+                <br> 即便是实际昆仑和许多其他山丘，也都因文化发展染上了仙意。
+                <br> 山和仙两种意义实在不易分开。
+                <br> 昆仑是山，仙道文化也离不开山，
+                <br> 所以，如果说我们谈的是山的文化也无不可，
+                <br> 当然以神话的山为基础。 本书资料充满了仙山意境。
+                <br> ————《昆仑文化与不死观念》
+            </p>
+        </div>
+    </div>
+    <div class="box6">
+        <div class="text6">
+            <p>昆仑文化与不死观念，是在月神宗教中发展的。
+                <br> 研究古代宗教，可以明白古代文化；
+                <br> 研究古代文化，也往往可以归纳到宗教上，昆仑文化是一好例。
+                <br> 昆仑文化中含有仙意，不死的观念也离不开昆仑文化；
+                <br> 即便是实际昆仑和许多其他山丘，也都因文化发展染上了仙意。
+                <br> 山和仙两种意义实在不易分开。
+                <br> 昆仑是山，仙道文化也离不开山，
+                <br> 所以，如果说我们谈的是山的文化也无不可，
+                <br> 当然以神话的山为基础。 本书资料充满了仙山意境。
+                <br> ————《昆仑文化与不死观念》
+            </p>
+        </div>
+    </div>
+    <div class="box7">
+        <div class="text7">
+            <p>昆仑文化与不死观念，是在月神宗教中发展的。
+                <br> 研究古代宗教，可以明白古代文化；
+                <br> 研究古代文化，也往往可以归纳到宗教上，昆仑文化是一好例。
+                <br> 昆仑文化中含有仙意，不死的观念也离不开昆仑文化；
+                <br> 即便是实际昆仑和许多其他山丘，也都因文化发展染上了仙意。
+                <br> 山和仙两种意义实在不易分开。
+                <br> 昆仑是山，仙道文化也离不开山，
+                <br> 所以，如果说我们谈的是山的文化也无不可，
+                <br> 当然以神话的山为基础。 本书资料充满了仙山意境。
+                <br> ————《昆仑文化与不死观念》
+            </p>
+        </div>
+    </div>
+    <div class="box8">
+        <div class="text8">
+            <p>昆仑文化与不死观念，是在月神宗教中发展的。
+                <br> 研究古代宗教，可以明白古代文化；
+                <br> 研究古代文化，也往往可以归纳到宗教上，昆仑文化是一好例。
+                <br> 昆仑文化中含有仙意，不死的观念也离不开昆仑文化；
+                <br> 即便是实际昆仑和许多其他山丘，也都因文化发展染上了仙意。
+                <br> 山和仙两种意义实在不易分开。
+                <br> 昆仑是山，仙道文化也离不开山，
+                <br> 所以，如果说我们谈的是山的文化也无不可，
+                <br> 当然以神话的山为基础。 本书资料充满了仙山意境。
+                <br> ————《昆仑文化与不死观念》
+            </p>
+        </div>
+    </div>
+    <div class="box9">
+        <div class="text9">
+            <p>昆仑文化与不死观念，是在月神宗教中发展的。
+                <br> 研究古代宗教，可以明白古代文化；
+                <br> 研究古代文化，也往往可以归纳到宗教上，昆仑文化是一好例。
+                <br> 昆仑文化中含有仙意，不死的观念也离不开昆仑文化；
+                <br> 即便是实际昆仑和许多其他山丘，也都因文化发展染上了仙意。
+                <br> 山和仙两种意义实在不易分开。
+                <br> 昆仑是山，仙道文化也离不开山，
+                <br> 所以，如果说我们谈的是山的文化也无不可，
+                <br> 当然以神话的山为基础。 本书资料充满了仙山意境。
+                <br> ————《昆仑文化与不死观念》
+            </p>
+        </div>
+    </div>
 </body>
 </html>
 
