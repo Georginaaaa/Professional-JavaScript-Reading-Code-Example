@@ -62,12 +62,14 @@
     缺点：不支持ie6、ie7，将div换成table */
     .box3{
         position: relative;
+        height: 220px;
     }
     .text3{
         color: #965429;
         position: absolute;
+        top:50%;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%,-50%);
     }
     /* absolute+transform 
     对父框设置position: relative，对子框设置position:absolute,left:50%,transform:translateX(-50%)
@@ -98,11 +100,12 @@
 
     /* 垂直居中 */
     .box6{
-        display: table-cell;
-        vertical-align: middle;
+        display: table;
     }
     .text6{
         color: #965429;
+        display: table-cell;
+        vertical-align: middle;
     }
     /* table-cell+vertical-align 
     将父框转化为一个表格单元格显示，设置内容垂直居中
@@ -110,10 +113,12 @@
     .box7{
         position: relative;
         color: #965429;
+        height: 220px;
     }
     .text7{
         position: absolute;
         top: 50%;
+        left: 31%;
         transform: translateY(-50%);
     }
     /* absolute+transform 
@@ -121,7 +126,7 @@
     .box8{
         color: #965429;
         text-align: center;
-        display: table-cell;
+        /* display: table-cell; */
         vertical-align: middle;
     }
     .text8{
@@ -141,6 +146,40 @@
     /* flex+justify-content+align-items 
     优点：只设置了box9
     缺点：兼容性存在一定问题 */
+    .box10{
+        height: 220px;
+        line-height: 220px;
+    }
+    .text10{
+        color: #965429;
+    }
+    /* 通过设置内联元素的高度和行高相等，从而使元素垂直居中 */
+    ul{
+        margin: 0;
+        padding: 0;
+    }
+    li{
+        list-style: none;
+    }
+    .flex-container{
+        display:flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        width: 60%;
+        margin: 0 auto;
+    }
+    .flex-item{
+        background: #965429;
+        padding: 30px;
+        width: 150px;
+        height: 100px;
+        margin-top: 100px;
+        line-height: 150px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+    }
     </style>
 </head>
 <body>
@@ -194,11 +233,6 @@
             </p>
         </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
     <div class="box4">
         <div class="text4">
             <p>昆仑文化与不死观念，是在月神宗教中发展的。
@@ -289,6 +323,15 @@
             </p>
         </div>
     </div>
+
+    <ul class="flex-container">
+        <li class="flex-item">1</li>
+        <li class="flex-item">2</li>
+        <li class="flex-item">3</li>
+        <li class="flex-item">4</li>
+        <li class="flex-item">5</li>
+        <li class="flex-item">6</li>
+    </ul>
 </body>
 </html>
 
