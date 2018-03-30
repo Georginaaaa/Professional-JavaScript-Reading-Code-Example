@@ -147,7 +147,7 @@ function generate(){
     count=parseInt(txtCount.value);
     if(isNaN(max)||isNaN(count))
     {
-        alert("随机数个数和最大值必须是整数")；
+        alert("随机数个数和最大值必须是整数");
         return；
     }
     var array=[];
@@ -170,3 +170,55 @@ function sortAlgorithm(type){
     txtOutput.value=array.join(",");
     return timer;
 }
+
+//前端控制路由
+export default function(router){
+    router.map({
+        '/':{
+            component:function(resolve){
+                require(['./PC.vue'],resolve)
+            }
+        },
+        '/m/:params':{
+            component:function(resolve){
+                require(['./Mobile.vue'],resolve)
+            }
+        },
+        '/p':{
+            component:function(resolve){
+                require(['./PC.vue'],resolve)
+            },
+            subRoutes:{
+                '/process/:username':{
+                    require(['./componests/Process.vue'],resolve)
+                }
+            }
+        }
+    })
+}
+//前端渲染，前端通过AJAX调用后台接口，数据逻辑放在前端，由前端维护
+<template>
+    <select id="rander">
+        <option value=''>--请选择所属业务--</option>
+        <option v-for="list in lists" :value="list" v-text="list"></option>
+    </select>
+</template>
+
+<script>
+    export default{
+        data:{
+            return{
+                lists:['选项一','选项二','选项三','选项四']
+            }
+        }，
+        ready:function(){
+            this.$http({
+                url:'/demo/',
+                method:'POST',
+            })
+            .then(function(reponse){
+                this.lists=reponse.data.lists//获取服务器端数并渲染
+            })
+        }
+    }
+</script>
