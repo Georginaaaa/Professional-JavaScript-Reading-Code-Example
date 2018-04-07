@@ -196,29 +196,34 @@ export default function(router){
         }
     })
 }
-//前端渲染，前端通过AJAX调用后台接口，数据逻辑放在前端，由前端维护
-<template>
-    <select id="rander">
-        <option value=''>--请选择所属业务--</option>
-        <option v-for="list in lists" :value="list" v-text="list"></option>
-    </select>
-</template>
 
-<script>
-    export default{
-        data:{
-            return{
-                lists:['选项一','选项二','选项三','选项四']
-            }
-        }，
-        ready:function(){
-            this.$http({
-                url:'/demo/',
-                method:'POST',
-            })
-            .then(function(reponse){
-                this.lists=reponse.data.lists//获取服务器端数并渲染
+//通用的事件监听器函数
+//Event工具集，from:github.com/markyunmarkyun.
+Event={
+    //页面加载完成后
+    readyEvent:function(fn){
+        if(fn==null){
+            fn=document;
+        }
+        var oldonload=window.onload;
+        if(typeof window.onload !='function'){
+            window.onload=fn;
+        }else{
+            window.onload=function(){
+                oldonload();
+                fn()
+            };
+        }
+    },
+    //视能力分别使用demo0\demo1\IE方式来绑定事件
+    //参数：操作的元素，事件名称，事件处理程序
+    addEvent:function(element,type,handler){
+        if(element.addEventListener){//事件类型、需要执行的函数、是否捕捉
+        element.addEventListener(type,handler,false);
+        }else if(element.attachEvent){
+            element.attachEvent('on'+type,function(){
+
             })
         }
     }
-</script>
+}
