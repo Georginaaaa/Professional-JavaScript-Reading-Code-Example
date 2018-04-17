@@ -10,9 +10,9 @@
     export default{
         data:{
             return{
-                lists:['选项一','选项二','选项三','选项四']
+                lists: ['选项一','选项二','选项三','选项四']
             }
-        }，
+        },
         ready:function(){
             this.$http({
                 url:'/demo/',
