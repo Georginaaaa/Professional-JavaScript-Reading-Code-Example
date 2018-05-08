@@ -163,3 +163,89 @@ console.log('Hi!');
 //Promise
 //Hi!
 //resolved
+
+//异步加载图片
+function loadImageAsync(url){
+    return new Promise(function(resolve,reject){
+        const image=new Image();
+
+        image.onload=function(){
+            resolve(image);
+        };
+
+        image.onerror=function(){
+            reject(new Error('Could not load image at'+url));
+        };
+
+        image.src=url;
+    });
+}
+
+//用Promise对象实现Ajax的操作
+const getJSON=function(url){//getJSON是对XMLHttpRequest对象的封装，用于发出一个针对JSON数据的HTTP请求
+    const promise=new Promise(function(resolve,reject){//并返回一个Promise对象
+        const handler=function(){
+            if(this.readyState!==4){
+                return;
+            }
+            if(this.status===200){
+                resolve(this.response);//内部resolve调用带有参数，传递给回调函数
+            }else{
+                reject(new Error(this.statusText));//内部reject调用带有参数，传递给回调函数
+            }
+        };
+        const client=new XMLHttpRequest();
+        client.open("GET",url);
+        client.onreadystatechange=handler;
+        client.responseType="json";
+        client.setRequestHeader("Accept","application/json");
+        client.send();
+    });
+    return promise;
+};
+
+getJson("/posts.json").then(function(json){
+    console.log('Contents:'+json);
+},function(error){
+    console.error('出错了',error);
+});
+//reject函数的参数通常是Error对象的实例，表示抛出错误
+//resolve函数的参数除了正常的值以外，还可能是另一个Promise实例
+const p1=new Promise(function(resolve,reject){//p1状态决定p2状态
+    //...
+});
+const p2=new Promise(function(resolve,reject){//将p1作为参数，一个异步操作的结果是返回另一个异步操作
+    //...
+    resolve(p1);
+});
+
+
+const p1=new Promise(function(resolve,reject){
+    setTimeout(()=>reject(new Error('fail')),3000)
+})
+
+const p2=new Promise(function(resolve,reject){
+    setTimeout(()=>resolve,1000)
+})
+
+p2
+    .then(result=>console.log(result))
+    .catch(error=>console.log(error))
+    //Error:fail
+//调用resolve或reject并不会终结Promise的参数函数的执行
+
+new Promise((resolve,reject)=>{
+    resolve(1);//resolve最后打印
+    console.log(2);
+}).then(r=>{
+    console.log(r);
+});
+//2
+//1
+//调用resolve或reject后，Promise的使命就完成了
+//后续操作应该放在then方法里面，最好在resolve或then前加上return语句
+new Promise((resolve,reject)=>{
+    return resolve(1);
+    //后面的语句不会执行
+    console.log(2);
+})
