@@ -249,3 +249,115 @@ new Promise((resolve,reject)=>{
     //后面的语句不会执行
     console.log(2);
 })
+
+//Promise.prototype.then()
+//为Promise实例添加状态改变时的回调函数(resolve,reject)
+//返回一个新的Promise实例
+getJSON("/posts.json").then(function(json){
+    return json.post;
+}).then(function(post){
+    //...
+});
+//then方法指定的回调函数，返回的是另一个Promise对象
+//采用链式的then，可以指定一组按照次序调用的回调函数
+getJSON("/post/1.json").then(function(post){
+    return getJSON(post.commentURL);
+}).then(function funcA(comments){
+    console.log("resolved:",comments);
+},function funcB(err){
+    console.log("rejected:",err);
+});
+//then方法指定的回调函数，就会等待这个新的Promise对象状态发生变化。如果变为resolved，就调用funcA，如果状态变为rejected，就调用funcB。
+//采用箭头函数
+getJSON("/post/1.json").then(
+    post=>getJSON(post.commentURL)
+).then(
+    comments=>console.log("resolved:",comments),
+    err=>console.log("rejected:",err)
+);
+
+//Promise.prototype.catch()
+//此方法是.then(null,rejection)别名，用于指定发生错误时的回调函数
+getJSON('/posts.json').then(function(posts){
+    //...
+}).catch(function(error){
+    //处理getJSON和前一个回调函数运行时发生的错误
+    console.log('发生错误！',error);
+});
+//then方法指定的回调函数，如果运行中抛出错误，也会被catch方法捕获
+p.then((val)=>console.log('fulfulled:',val))
+    .catch((err)=>console.log('rejected',err));
+
+//等同于
+p.then((val)=>console.log('fulfulled:',val))
+    .then(null,(err)=>console.log("rejected:",err));
+//下面是一个例子
+const promise=new Promise(function(resolve,reject){
+    throw new Error('test');
+});
+promise.catch(function(error){
+    console.log(error);
+});
+//Error:test
+//promise抛出一个错误，就被catch方法指定的回调函数捕获
+
+//另外的写法一（等价）
+const promise=new Promise(function(resolve,reject){
+    try{
+        throw new Error('test');
+    }catch(e){
+        reject(e);
+    }
+});
+promise.catch(function(error){
+    console.log(error);
+});
+
+//另外的写法二（等价）
+const promise=new Promise(function(resolve,reject){
+    reject(new Error('test'));
+});
+promise.catch(function(error){
+    console.log(error);
+});
+
+//如果Promise状态已经变成resolved,再抛出错误是无效的
+const promise=new Promise(function(resolve,reject){
+    resolve('ok');
+    throw new Error('test');
+});
+promise
+    .then(function(value){console.log(value)})
+    .catch(function(error){console.log(error)});
+//resolve语句后面再抛出错误，不会被捕获，等于没有抛出
+//Promise的状态一旦改变，就永久保持状态，不会再变了
+
+//Promise对象的错误总是会被下一个catch语句捕获
+getJSON('/post/1.json').then(function(post){
+    return getJSON(post.commentURL);
+}).then(function(comments){
+    //some code
+}).catch(function(error){
+    //处理前面三个Promise产生的错误
+});
+//上面一共有3个Promise对象：一个由getJSON产生，2个由then产生
+//它们之中任何一个抛出错误，都会被最后一个catch捕获
+
+//不要在then里定义Reject状态的回调函数，而用catch方法
+//bad
+promise
+    .then(function(data){
+        //success
+    },function(err){
+        //error
+    });
+
+//good
+promise
+    .then(function(data){//cb
+        //success
+    })
+    .catch(function(err){
+        //error
+    });
+//good写法可以捕获前面then方法执行中的错误，也更接近同步的写法(try/catch)
