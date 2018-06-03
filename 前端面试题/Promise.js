@@ -361,3 +361,100 @@ promise
         //error
     });
 //good写法可以捕获前面then方法执行中的错误，也更接近同步的写法(try/catch)
+//如果没有使用catch方法指定错误处理的回调函数，Promise对象抛出的错误不会传递到外层代码，即不会有任何反应
+const someAsyncThing=function(){
+    return new Promise(function(resolve,reject){
+        //下面一行会报错，因为x没有声明
+        resolve(x+2);
+    });
+};
+
+someAsyncThing().then(function(){
+    console.log('everything is great');
+});
+
+setTimeout(()=>{console.log(123)},2000);
+//Uncaught (in promise) ReferenceError: x is not defined
+//123
+
+//Node有一个unhandleRejection时间，专门监听未捕获的reject错误
+process.on('unhandledRejection',function(err,p){
+    throw err;
+});
+//两个参数，第一个是错误对象，第二个是报错的Promise实例
+
+const promise=new Promise(function(resolve,reject){
+    resolve('ok');
+    setTimeout(function(){throw new Error('rest')},0)
+});
+promise.then(function(value){console.log(value)});
+// ok
+// Uncaught Error: test
+
+//Promise对象后面要跟catch方法，这样可以处理Promise内部发生的错误
+const someAsyncThing=function(){
+    return new Promise(function(resolve,reject){
+        //下面一行会报错，因为x没有声明
+        resolve(x+2);
+    });
+};
+
+someAsyncThing()
+.catch(function(error){
+    console.log('oh no',error);
+})
+.then(function(){
+    console.log('carry on');
+});
+//oh no ReferenceError: x is not defined
+//carry on
+
+//如果没有报错，则会跳过catch方法
+Promise.resolve()
+.catch(function(error){
+    console.log('oh no',error);
+})
+.then(function(){
+    console.log('carry on');
+});
+//carry on
+//then方法报错，与catch无关
+
+//catch方法之中，还能再抛出错误
+const someAsyncThing=function(){
+    return new Promise(function(resolve,reject){
+        //下面一行会报错，因为x没有声明
+        resolve(x+2);
+    });
+};
+
+someAsyncThing().then(function(){
+    return someAsyncThing();
+}).catch(function(error){
+    console.log('oh no',error);
+    //下面一行会报错，因为y没有声明
+    y+2;
+}).then(function(){
+    console.log('carry on');
+});
+//Uncaught SyntaxError: Identifier 'someAsyncThing' has already been declared
+//catch方法抛出错误，后面没有catch方法了，这个错误不会被捕获
+
+someAsyncThing().then(function(){
+    return someAsyncThing();
+}).catch(function(error){
+    console.log('oh no',error);
+    //下面一行会报错，因为y没有声明
+    y+2;
+}).catch(function(error){
+    console.log('carry on',error);
+});
+//oh no ReferenceError: x is not defined
+//carry on ReferenceError: y is not defined
+//捕获前一个catch错误
+
+//Promise.prototype.finally()
+
+//Promise.all()
+//将多个Promise实例，包装成一个新的Promise实例
+
