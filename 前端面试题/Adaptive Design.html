@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自适应布局</title>
+    <link rel="stylesheet" media="screen and(max-width:400px)" href="mini.css">
+    <!-- 也可以把要套用的描述独立成外部档案 -->
+    <link rel="stylesheet" media="only screen and (-webkit-min-divice-pixel-ratio:2)" type="text/css" href="iphone4.css">
+    <!-- 针对iPhone4提供专用的CSS设定档 -->
+    <link rel="stylesheet" media="all and (orientation:portrait)" href="portrait.css">
+    <link rel="stylesheet" media="all and (orientation:landscape)" href="landscape.css">
+    <!-- 针对iPad的Portrait Mode（直立）和Landscape Mode（横躺）两种浏览器模式给予不同的css设定档 -->
+    <style>
+        /* CSS3 Media Queries根据不同的屏幕分辨率，选择不同的CSS规则 */
+        @media screen and (max-width:400px){
+            .class{
+                background: #ccc;
+            }
+        }
+        @media screen and (min-width:800px){
+            .class{
+                background: #666;
+            }
+        }
+        /* Device Width若浏览器的可视范围最大为480px，则下方的CSS描述就会立即被套住 */
+        @media screen and (max-device-width:480px){
+            .class{
+                background: #000;
+            }
+        }
+        body{
+            font:normal 100% Helvetica,Arial,sans-serif;
+            }
+        /* 上面的代码指定，字体大小是页面默认大小的100%,即16像素 */
+        h1{
+            font-size: 1.5em;
+        }
+        /* h1的大小是默认大小的1.5倍，即像素(26/16=1.5) */
+        .small{
+            font-size: 0.875em;
+        }
+        /* small元素的大小是默认大小的0.875倍，即像素(14/16=0.875) */
+        .main{
+            float: right;
+            width: 70%;
+        }
+        .leftBar{
+            float: left;
+            width: 25%;
+        }
+        /* float的好处是，如果宽度太小，放不下两个元素，后面的元素会自动滚动到前面元素的下方，
+        不会在水平方向overflow(溢出)，避免了水平滚动条的出现 */
+        img{
+            max-width: 100%;
+        }
+         /* 要使图片按等比缩放，一般不需要规定图片高度。且做好不用background-image，
+            因为这样不会按照等比缩放 */
+    </style>
+    <script>
+    viewport=document.querySelector("meta[name=viewport]");
+    viewport.setAttribute('content','width=device-width;initial-scale=1.0;maximum-scale=1.0;user-scale=0;');
+    </script>
+</head>
+<body>
+    <div class="class"></div>
+    <span>③不适用绝对宽度：(margin-left:5px)和(width:200px),最好使用百分比宽度width:20%或者width:suto;</span>
+    <span>④字体最好不要用绝对大小(px),而使用相对大小(em)</span>
+    <span>⑤流动布局(fluid grid)的含义是各个位置都是浮动的，不是固定不变的</span>
+    <span>⑥图片等比缩放</span>
+</body>
+</html>
